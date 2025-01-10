@@ -1,8 +1,8 @@
-output "kubeconfig" {
-  description = "Kubeconfig file to access the EKS cluster"
-  value       = module.eks.kubeconfig
-  sensitive   = true
-}
+#output "kubeconfig" {
+ # description = "Kubeconfig file to access the EKS cluster"
+#  value       = module.eks.kubeconfig
+ # sensitive   = true
+#}
 
 output "eks_cluster_name" {
   description = "The name of the EKS cluster"
