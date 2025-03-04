@@ -31,3 +31,31 @@ variable "key_name" {
   type        = string
   default     = null
 }
+
+variable "desired_capacity"{
+  description = "The desired capacity of the node group"
+  type        = number
+  default     = 2
+}
+
+variable "max_capacity"{
+  description = "The maximum capacity of the node group"
+  type        = number
+  default     = 3
+}
+
+variable "min_capacity"{
+  description = "The minimum capacity of the node group"
+  type        = number
+  default     = 1
+}
+variable "instance_type" {
+  description = "The instance type for the node group"
+  type        = string
+  default     = "t3.medium"
+}
+variable "node_group_key_name" {
+  description = "The name of the SSH key pair to use for EC2 instances in the node group"
+  type        = string
+  default     = null
+}

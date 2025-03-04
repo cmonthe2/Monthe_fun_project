@@ -12,12 +12,12 @@ module "eks" {
   # Optional: To manage node groups
   node_groups = {
     default = {
-      desired_capacity = 2
-      max_capacity     = 3
-      min_capacity     = 1
+      desired_capacity = var.desired_capacity
+      max_capacity     = var.max_capacity   
+      min_capacity     = var.min_capacity
 
-      instance_type = "t3.medium"
-      key_name      = var.key_name
+      instance_type = var.instance_type
+      key_name      = var.node_group_key_name
     }
   }
 }
