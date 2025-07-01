@@ -50,8 +50,6 @@ No resources.
 
  awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status | tail -2; done
 
-for project in $(oc get projects | grep -v kube | grep -v amq | grep -v jenkins | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Pod/Container Info:"; oc get pods -o wide --show-labels; done
+oc get projects | grep -v openshift | grep -v kube | grep -v redhat | grep -v amq | grep -v 3scale | grep -v ibm | grep -v ibm | grep -v service-registry | grep -v inspire | grep -v keda | grep -v istio | grep -v nfs | grep -v oadp | grep -v unleash | grep -v costmanagement | grep -v conduktor | grep -v knative | grep -v default | grep -v datamasque | grep -v jenkins | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Container IDs:"; oc get pods -o jsonpath='{range .items[]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.status.containerStatuses[].containerID}{"\n"}{end}'; done 
 
-for project in $(oc get projects | grep -v kube | grep -v amq | grep -v jenkins | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Container IDs:"; oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.status.containerStatuses[*].containerID}{"\n"}{end}'; done
-
- 
+oc get projects | grep -v openshift | grep -v kube | grep -v redhat | grep -v amq | grep -v 3scale | grep -v ibm | grep -v ibm | grep -v service-registry | grep -v inspire | grep -v keda | grep -v istio | grep -v nfs | grep -v oadp | grep -v unleash | grep -v costmanagement | grep -v conduktor | grep -v knative | grep -v default | grep -v datamasque | grep -v jenkins | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Container IDs:"; oc get pods -o jsonpath='{range .items[]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.status.containerStatuses[].containerID}{"\n"}{end}'; done
