@@ -49,3 +49,5 @@ No resources.
 
 
  awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status | tail -2; done
+
+ for project in $(oc get projects | grep -v kube | grep -v amq | grep -v jenkins | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Container IDs:"; echo -e "POD_NAME\tCONTAINER_ID"; oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.containerStatuses[*].containerID}{"\n"}{end}'; echo; done
