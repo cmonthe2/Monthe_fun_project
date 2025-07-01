@@ -50,7 +50,7 @@ No resources.
 
  awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status | tail -2; done
 
- for project in $(oc get projects | grep -v -E "openshift|kube|redhat|amq|3scale|ibm|service-registry|inspire|keda|istio|nfs|oadp|unleash|costmanagement|conduktor|knative|default|datamasque|jenkins" | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Pods:"; oc get pods; echo "Container IDs:"; oc describe pods | grep "Container ID" 2>/dev/null; done
+for project in $(oc get projects | grep -v -E "openshift|kube|redhat|amq|3scale|ibm|service-registry|inspire|keda|istio|nfs|oadp|unleash|costmanagement|conduktor|knative|default|datamasque|jenkins" | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Pods and Container IDs:"; oc get pods -o jsonpath='{range .items[*]}{"Pod: "}{.metadata.name}{"\n"}{range .status.containerStatuses[*]}{"  Container ID: "}{.containerID}{"\n"}{end}{"\n"}{end}' 2>/dev/null; done
 
 for project in $(oc get projects | grep -v -E "openshift|kube|redhat|amq|3scale|ibm|service-registry|inspire|keda|istio|nfs|oadp|unleash|costmanagement|conduktor|knative|default|datamasque|jenkins" | awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status; echo "Container Details:"; oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?(@.type==\"Ready\")].status --no-headers 2>/dev/null || echo "No pods found"; done
 
