@@ -46,7 +46,7 @@ No resources.
 <!-- END_TF_DOCS -->
 
 
-
+echo "Project,Deployment_Name,Pod_Name,Pod_Status,Container_ID" > detailed_output.csv; for project in $(oc get projects | grep -v -E "openshift|kube|redhat|amq|3scale|ibm|service-registry|inspire|keda|istio|nfs|oadp|unleash|costmanagement|conduktor|knative|default|datamasque|jenkins" | awk '{print $1}' | tail -n +2); do oc project $project >/dev/null 2>&1; deployment=$(oc get dc --no-headers 2>/dev/null | tail -1 | awk '{print $1}' || oc get deployment --no-headers 2>/dev/null | tail -1 | awk '{print $1}' || echo "N/A"); oc get pods -o jsonpath='{range .items[*]}{"\n"}'"$project"','"$deployment"',{.metadata.name},{.status.phase},{range .status.containerStatuses[*]}{.containerID}{end}{end}' 2>/dev/null; done >> detailed_output.csv
 
  awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status | tail -2; done
 
