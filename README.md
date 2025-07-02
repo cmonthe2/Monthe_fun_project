@@ -51,14 +51,14 @@ echo "Project,Deployment_Name,Pod_Name,Pod_Status,Container_ID,Image_ID,Creation
 for project in $(oc get projects | grep -v -E "openshift|kube|redhat|amq|3scale|ibm|service-registry|inspire|keda|istio|nfs|oadp|unleash|costmanagement|conduktor|knative|default|datamasque|jenkins" | awk '{print $1}' | tail -n +2); do
   oc project $project >/dev/null 2>&1
   deployment=$(oc get dc --no-headers 2>/dev/null | tail -1 | awk '{print $1}' || oc get deployment --no-headers 2>/dev/null | tail -1 | awk '{print $1}' || echo "N/A")
-  oc get pods --no-headers 2>/dev/null | while read pod status ready restarts age; do
+  oc get pods --no-headers 2>/dev/null | while read pod pod_status ready restarts age; do
     container_id=$(oc get pod $pod -o jsonpath='{.status.containerStatuses[0].containerID}' 2>/dev/null || echo "N/A")
     image_id=$(oc get pod $pod -o jsonpath='{.status.containerStatuses[0].imageID}' 2>/dev/null || echo "N/A")
     creation_time=$(oc get pod $pod -o jsonpath='{.metadata.creationTimestamp}' 2>/dev/null)
-    echo "$project,$deployment,$pod,$status,$container_id,$image_id,$creation_time"
+    echo "$project,$deployment,$pod,$pod_status,$container_id,$image_id,$creation_time"
   done
 done
-} > detailed_output.csv
+} > detailed_output66.csv
 
  awk '{print $1}' | tail -n +2); do echo "=== $project ==="; oc project $project; oc status | tail -2; done
 
